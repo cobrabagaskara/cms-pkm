@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layanan – Puskesmas Kedawung</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> / Layanan</div>
+    <h1>Layanan Kesehatan</h1>
+    <p>Kami menyediakan berbagai layanan kesehatan untuk masyarakat Kedawung dan sekitarnya.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Fasilitas Kami</span>
+      <h2 class="section-title">Semua Layanan</h2>
+      <p class="section-sub">Setiap layanan ditangani oleh tenaga medis profesional dan berpengalaman.</p>
+    </div>
+    <div class="grid-3" id="layanan-grid">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat...</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFIL / VISI MISI -->
+<section class="section section-alt" id="profil">
+  <div class="container">
+    <div class="section-header centered">
+      <span class="section-eyebrow">Profil</span>
+      <h2 class="section-title">Tentang Puskesmas</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;" id="profil-grid">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat...</div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+initPage(async (profil) => {
+  document.title = `Layanan – ${profil.nama}`;
+
+  const layanan = await fetchJSON('_data/layanan.json');
+  document.getElementById('layanan-grid').innerHTML = layanan.map(l => `
+    <div class="card">
+      <div class="card-icon">${l.icon}</div>
+      <div class="card-title">${l.nama}</div>
+      <div class="card-text">${l.deskripsi}</div>
+      <div class="card-meta">🕐 ${l.jam}</div>
+    </div>`).join('');
+
+  document.getElementById('profil-grid').innerHTML = `
+    <div>
+      <h3 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:12px;">Sejarah</h3>
+      <p style="color:var(--muted);line-height:1.8;font-size:15px;">${profil.sejarah}</p>
+      <h3 style="font-family:'Fraunces',serif;font-size:22px;margin:24px 0 12px;">Wilayah Kerja</h3>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        ${profil.wilayah_kerja.map(w => `<li style="display:flex;gap:8px;align-items:center;font-size:14px;"><span style="color:var(--primary)">📍</span>${w}</li>`).join('')}
+      </ul>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Visi</div>
+        <div class="card-text">${profil.visi}</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">Misi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+          ${profil.misi.map(m => `<li style="font-size:13px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--primary);flex-shrink:0">✓</span>${m}</li>`).join('')}
+        </ul>
+      </div>
+    </div>`;
+});
+</script>
+</body>
+</html>

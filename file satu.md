@@ -1,1 +1,1 @@
-ini file pertama
+ini file pertama ya

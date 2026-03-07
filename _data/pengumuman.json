@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "judul": "Jadwal Posyandu Bulan Juli 2025",
+    "tanggal": "2025-07-01",
+    "isi": "Posyandu balita akan dilaksanakan pada setiap Selasa minggu pertama di masing-masing desa wilayah kerja Puskesmas Kedawung. Harap membawa buku KIA dan kartu posyandu.",
+    "penting": true
+  },
+  {
+    "id": "2",
+    "judul": "Pelayanan Libur Hari Raya",
+    "tanggal": "2025-06-15",
+    "isi": "Puskesmas Kedawung akan tutup pada tanggal 17 Agustus 2025 dalam rangka HUT Kemerdekaan RI. Untuk kedaruratan medis, silakan menghubungi IGD RSUD Gunung Jati.",
+    "penting": true
+  },
+  {
+    "id": "3",
+    "judul": "Program Vaksinasi Gratis",
+    "tanggal": "2025-06-01",
+    "isi": "Tersedia program vaksinasi influenza gratis bagi lansia usia 60 tahun ke atas. Datang langsung ke Puskesmas setiap Senin dan Rabu pukul 08.00 – 11.00.",
+    "penting": false
+  }
+]

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel Kesehatan – Puskesmas Kedawung</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+  .filter-btn {
+    padding:7px 16px; border-radius:100px; border:1.5px solid var(--border);
+    font-size:12px; font-weight:600; cursor:pointer; background:white;
+    transition:all 0.15s; color:var(--muted);
+  }
+  .filter-btn:hover, .filter-btn.active { background:var(--primary); color:white; border-color:var(--primary); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> / Artikel Kesehatan</div>
+    <h1>Artikel Kesehatan</h1>
+    <p>Edukasi kesehatan untuk masyarakat Kedawung dan sekitarnya.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="grid-3" id="artikel-grid">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat artikel...</div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const KATEGORI_EMOJI = { 'Gizi':'🥗','Imunisasi':'💉','Higienitas':'🧼','Ibu & Anak':'👶','Lansia':'🧓','Umum':'🩺' };
+let allArtikel = [];
+let activeKat = 'Semua';
+
+function renderFilter(artikelList) {
+  const kategori = ['Semua', ...new Set(artikelList.map(a => a.kategori))];
+  document.getElementById('filter-bar').innerHTML = kategori.map(k => `
+    <button class="filter-btn ${k === activeKat ? 'active' : ''}" onclick="filterArtikel('${k}')">${k}</button>`).join('');
+}
+
+function filterArtikel(kat) {
+  activeKat = kat;
+  renderFilter(allArtikel);
+  const filtered = kat === 'Semua' ? allArtikel : allArtikel.filter(a => a.kategori === kat);
+  renderArtikel(filtered);
+}
+
+function renderArtikel(list) {
+  if (!list.length) {
+    document.getElementById('artikel-grid').innerHTML = `
+      <div style="text-align:center;padding:60px;color:var(--muted);grid-column:1/-1">
+        <div style="font-size:40px;margin-bottom:12px;">📭</div>
+        <div>Belum ada artikel dalam kategori ini.</div>
+      </div>`;
+    return;
+  }
+  document.getElementById('artikel-grid').innerHTML = list.map(a => `
+    <div class="article-card" onclick="location.href='artikel-detail.html?id=${a.slug}'">
+      <div class="article-thumb">${KATEGORI_EMOJI[a.kategori] || '📄'}</div>
+      <div class="article-body">
+        <span class="article-kategori">${a.kategori}</span>
+        <div class="article-title">${a.judul}</div>
+        <div class="article-ringkasan">${a.ringkasan}</div>
+      </div>
+      <div class="article-footer">
+        <span>${formatTanggal(a.tanggal)}</span>
+        <span style="color:var(--primary);font-weight:600">Baca →</span>
+      </div>
+    </div>`).join('');
+}
+
+initPage(async (profil) => {
+  document.title = `Artikel – ${profil.nama}`;
+  try {
+    allArtikel = await fetchJSON('_data/artikel-index.json');
+    renderFilter(allArtikel);
+    renderArtikel(allArtikel);
+  } catch(e) {
+    document.getElementById('artikel-grid').innerHTML = '<p style="color:var(--muted)">Belum ada artikel tersedia.</p>';
+  }
+});
+</script>
+</body>
+</html>

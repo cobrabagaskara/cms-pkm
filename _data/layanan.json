@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "nama": "Poli Umum",
+    "icon": "🩺",
+    "deskripsi": "Pemeriksaan dan pengobatan penyakit umum oleh dokter umum.",
+    "jam": "07.30 – 12.00"
+  },
+  {
+    "id": "2",
+    "nama": "Poli KIA & KB",
+    "icon": "👶",
+    "deskripsi": "Pelayanan kesehatan ibu dan anak, imunisasi, serta program keluarga berencana.",
+    "jam": "07.30 – 12.00"
+  },
+  {
+    "id": "3",
+    "nama": "Poli Gigi",
+    "icon": "🦷",
+    "deskripsi": "Pemeriksaan dan pengobatan gigi oleh dokter gigi.",
+    "jam": "07.30 – 12.00"
+  },
+  {
+    "id": "4",
+    "nama": "Laboratorium",
+    "icon": "🔬",
+    "deskripsi": "Pemeriksaan darah, urine, dan tes diagnostik lainnya.",
+    "jam": "07.30 – 12.00"
+  },
+  {
+    "id": "5",
+    "nama": "Farmasi",
+    "icon": "💊",
+    "deskripsi": "Pengambilan obat berdasarkan resep dokter.",
+    "jam": "07.30 – 13.00"
+  },
+  {
+    "id": "6",
+    "nama": "Lansia",
+    "icon": "🧓",
+    "deskripsi": "Pelayanan kesehatan khusus untuk warga lanjut usia.",
+    "jam": "07.30 – 11.00"
+  },
+  {
+    "id": "7",
+    "nama": "Imunisasi",
+    "icon": "💉",
+    "deskripsi": "Program imunisasi bayi dan balita sesuai jadwal nasional.",
+    "jam": "Selasa & Kamis"
+  },
+  {
+    "id": "8",
+    "nama": "Gizi",
+    "icon": "🥗",
+    "deskripsi": "Konsultasi gizi dan penanganan masalah gizi masyarakat.",
+    "jam": "07.30 – 12.00"
+  }
+]

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel – Puskesmas Kedawung</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<section class="section">
+  <div class="container">
+    <div id="artikel-content">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat artikel...</div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const KATEGORI_EMOJI = { 'Gizi':'🥗','Imunisasi':'💉','Higienitas':'🧼','Ibu & Anak':'👶','Lansia':'🧓','Umum':'🩺' };
+
+function markdownToHtml(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^(?!<[hul])/gm, '')
+    .split('\n').filter(l => l.trim()).map(l => l.startsWith('<') ? l : `<p>${l}</p>`).join('\n');
+}
+
+initPage(async (profil) => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (!id) { location.href = 'artikel.html'; return; }
+
+  try {
+    const a = await fetchJSON(`_data/artikel/${id}.json`);
+    document.title = `${a.judul} – ${profil.nama}`;
+
+    document.getElementById('artikel-content').innerHTML = `
+      <div style="margin-bottom:24px;">
+        <a href="artikel.html" style="font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;">← Kembali ke Artikel</a>
+      </div>
+      <div class="article-detail">
+        <div class="article-detail-header">
+          <span class="article-kategori">${a.kategori}</span>
+          <h1 class="article-detail-title">${a.judul}</h1>
+          <div class="article-detail-meta">
+            <span>📅 ${formatTanggal(a.tanggal)}</span>
+            <span>✍️ Tim Puskesmas Kedawung</span>
+          </div>
+        </div>
+        <div class="article-detail-img" style="font-size:80px;">
+          ${a.gambar ? `<img src="${a.gambar}" alt="${a.judul}">` : (KATEGORI_EMOJI[a.kategori] || '📄')}
+        </div>
+        <div class="article-detail-body">${markdownToHtml(a.isi)}</div>
+        <div style="margin-top:40px;padding-top:24px;border-top:1px solid var(--border);">
+          <a href="artikel.html" class="btn btn-primary">← Kembali ke Semua Artikel</a>
+        </div>
+      </div>`;
+  } catch(e) {
+    document.getElementById('artikel-content').innerHTML = `
+      <div style="text-align:center;padding:80px;">
+        <div style="font-size:48px;margin-bottom:16px;">😕</div>
+        <h2>Artikel tidak ditemukan</h2>
+        <p style="color:var(--muted);margin:12px 0 24px;">Artikel yang kamu cari tidak tersedia.</p>
+        <a href="artikel.html" class="btn btn-primary">Kembali ke Artikel</a>
+      </div>`;
+  }
+});
+</script>
+</body>
+</html>

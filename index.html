@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puskesmas Kedawung</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<!-- HERO -->
+<section class="hero" id="hero-section">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">🏥 Pelayanan Kesehatan Masyarakat</div>
+    <h1 id="hero-title">Selamat Datang di Puskesmas Kedawung</h1>
+    <p class="hero-tagline" id="hero-tagline">Melayani dengan Sepenuh Hati</p>
+    <div class="hero-actions">
+      <a href="layanan.html" class="btn btn-white">Lihat Layanan</a>
+      <a href="jadwal.html" class="btn btn-outline-white">Jadwal Dokter</a>
+    </div>
+    <div class="hero-stats" id="hero-stats">
+      <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Layanan Tersedia</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Tenaga Medis</div></div>
+      <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Desa Wilayah Kerja</div></div>
+      <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Tahun Berdiri</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN UNGGULAN -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header centered">
+      <span class="section-eyebrow">Layanan Kami</span>
+      <h2 class="section-title">Layanan Kesehatan Unggulan</h2>
+      <p class="section-sub">Kami menyediakan berbagai layanan kesehatan untuk memenuhi kebutuhan masyarakat Kedawung.</p>
+    </div>
+    <div class="grid-4" id="layanan-grid">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat...</div>
+    </div>
+    <div class="text-center mt-32">
+      <a href="layanan.html" class="btn btn-primary">Lihat Semua Layanan →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PENGUMUMAN TERBARU -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Info Terkini</span>
+      <h2 class="section-title">Pengumuman Terbaru</h2>
+    </div>
+    <div id="pengumuman-list" style="display:flex;flex-direction:column;gap:12px;">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat...</div>
+    </div>
+    <div class="mt-32">
+      <a href="pengumuman.html" class="btn btn-primary">Lihat Semua Pengumuman →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIKEL TERBARU -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header centered">
+      <span class="section-eyebrow">Edukasi Kesehatan</span>
+      <h2 class="section-title">Artikel Kesehatan Terbaru</h2>
+      <p class="section-sub">Informasi dan edukasi kesehatan untuk masyarakat Kedawung.</p>
+    </div>
+    <div class="grid-3" id="artikel-grid">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat...</div>
+    </div>
+    <div class="text-center mt-32">
+      <a href="artikel.html" class="btn btn-primary">Lihat Semua Artikel →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROFIL SINGKAT -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+      <div>
+        <span class="section-eyebrow">Tentang Kami</span>
+        <h2 class="section-title mt-8" id="profil-title">Puskesmas Kedawung</h2>
+        <p style="font-size:15px;color:var(--muted);line-height:1.8;margin:16px 0;" id="profil-sejarah">Memuat...</p>
+        <a href="layanan.html#profil" class="btn btn-primary">Pelajari Lebih Lanjut →</a>
+      </div>
+      <div id="visi-misi-box">
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Visi</div>
+          <div class="card-text" id="visi-text">Memuat...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const KATEGORI_EMOJI = { 'Gizi':'🥗','Imunisasi':'💉','Higienitas':'🧼','Ibu & Anak':'👶','Lansia':'🧓','Umum':'🩺' };
+
+initPage(async (profil) => {
+  document.title = profil.nama;
+  document.getElementById('hero-title').textContent = `Selamat Datang di ${profil.nama}`;
+  document.getElementById('hero-tagline').textContent = profil.tagline;
+  document.getElementById('profil-title').textContent = profil.nama;
+  document.getElementById('profil-sejarah').textContent = profil.sejarah;
+  document.getElementById('visi-text').textContent = profil.visi;
+  document.getElementById('hero-stats').innerHTML = `
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Layanan Tersedia</div></div>
+    <div class="stat-item"><div class="stat-num">${profil.wilayah_kerja.length}</div><div class="stat-label">Desa Wilayah Kerja</div></div>
+    <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Tahun Berdiri</div></div>
+    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">IGD Tersedia</div></div>`;
+
+  // Layanan
+  const layanan = await fetchJSON('_data/layanan.json');
+  document.getElementById('layanan-grid').innerHTML = layanan.slice(0,4).map(l => `
+    <div class="card">
+      <div class="card-icon">${l.icon}</div>
+      <div class="card-title">${l.nama}</div>
+      <div class="card-text">${l.deskripsi}</div>
+      <div class="card-meta">🕐 ${l.jam}</div>
+    </div>`).join('');
+
+  // Pengumuman
+  const pengumuman = await fetchJSON('_data/pengumuman.json');
+  document.getElementById('pengumuman-list').innerHTML = pengumuman.slice(0,3).map(p => `
+    <div class="pengumuman-item ${p.penting ? 'penting' : ''}">
+      <div class="pengumuman-dot"></div>
+      <div>
+        <div class="pengumuman-title">${p.judul}</div>
+        <div class="pengumuman-isi">${p.isi.substring(0,140)}...</div>
+        <div class="pengumuman-date">📅 ${formatTanggal(p.tanggal)}</div>
+      </div>
+    </div>`).join('');
+
+  // Artikel
+  const artikelList = await fetchJSON('_data/artikel-index.json').catch(() => null);
+  if (artikelList) {
+    document.getElementById('artikel-grid').innerHTML = artikelList.slice(0,3).map(a => `
+      <div class="article-card" onclick="location.href='artikel-detail.html?id=${a.slug}'">
+        <div class="article-thumb">${KATEGORI_EMOJI[a.kategori] || '📄'}</div>
+        <div class="article-body">
+          <span class="article-kategori">${a.kategori}</span>
+          <div class="article-title">${a.judul}</div>
+          <div class="article-ringkasan">${a.ringkasan}</div>
+        </div>
+        <div class="article-footer">
+          <span>${formatTanggal(a.tanggal)}</span>
+          <span style="color:var(--primary);font-weight:600">Baca →</span>
+        </div>
+      </div>`).join('');
+  } else {
+    document.getElementById('artikel-grid').innerHTML = '<p style="color:var(--muted)">Belum ada artikel.</p>';
+  }
+});
+</script>
+</body>
+</html>

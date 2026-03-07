@@ -1,0 +1,54 @@
+[
+  {
+    "nama": "dr. Siti Rahayu",
+    "spesialis": "Dokter Umum",
+    "foto": "",
+    "jadwal": {
+      "Senin": "07.30 – 14.00",
+      "Selasa": "07.30 – 14.00",
+      "Rabu": "07.30 – 14.00",
+      "Kamis": "–",
+      "Jumat": "07.30 – 14.00",
+      "Sabtu": "07.30 – 12.00"
+    }
+  },
+  {
+    "nama": "dr. Ahmad Fauzi",
+    "spesialis": "Dokter Umum",
+    "foto": "",
+    "jadwal": {
+      "Senin": "–",
+      "Selasa": "07.30 – 14.00",
+      "Rabu": "–",
+      "Kamis": "07.30 – 14.00",
+      "Jumat": "07.30 – 14.00",
+      "Sabtu": "–"
+    }
+  },
+  {
+    "nama": "drg. Maya Kusuma",
+    "spesialis": "Dokter Gigi",
+    "foto": "",
+    "jadwal": {
+      "Senin": "07.30 – 12.00",
+      "Selasa": "–",
+      "Rabu": "07.30 – 12.00",
+      "Kamis": "–",
+      "Jumat": "07.30 – 12.00",
+      "Sabtu": "07.30 – 11.00"
+    }
+  },
+  {
+    "nama": "Bd. Rina Marlina",
+    "spesialis": "Bidan (KIA/KB)",
+    "foto": "",
+    "jadwal": {
+      "Senin": "07.30 – 14.00",
+      "Selasa": "07.30 – 14.00",
+      "Rabu": "07.30 – 14.00",
+      "Kamis": "07.30 – 14.00",
+      "Jumat": "07.30 – 14.00",
+      "Sabtu": "07.30 – 12.00"
+    }
+  }
+]

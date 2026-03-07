@@ -1,0 +1,17 @@
+{
+  "nama": "Puskesmas Kedawung",
+  "tagline": "Melayani dengan Sepenuh Hati",
+  "alamat": "Jl. Raya Kedawung No. 1, Kedawung, Cirebon",
+  "telepon": "(0231) 123456",
+  "email": "puskesmas.kedawung@cirebon.go.id",
+  "jam_operasional": "Senin – Jumat: 07.30 – 14.00 | Sabtu: 07.30 – 12.00",
+  "visi": "Terwujudnya masyarakat Kedawung yang sehat, mandiri, dan berkeadilan.",
+  "misi": [
+    "Meningkatkan kualitas pelayanan kesehatan yang merata dan terjangkau",
+    "Mendorong kemandirian masyarakat dalam menjaga kesehatan",
+    "Meningkatkan kompetensi dan profesionalisme tenaga kesehatan",
+    "Mengembangkan sistem informasi kesehatan yang akurat dan transparan"
+  ],
+  "sejarah": "Puskesmas Kedawung berdiri sejak tahun 1975 dan telah melayani masyarakat Kecamatan Kedawung selama lebih dari empat dekade. Dengan semangat pelayanan prima, kami terus berkembang untuk memenuhi kebutuhan kesehatan warga.",
+  "wilayah_kerja": ["Desa Kedawung", "Desa Kertawinangun", "Desa Pilangsari", "Desa Karangwangun", "Desa Setupatok"]
+}

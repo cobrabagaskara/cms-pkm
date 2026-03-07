@@ -1,0 +1,20 @@
+[
+  {
+    "id": "001",
+    "slug": "001-cuci-tangan-pakai-sabun",
+    "judul": "Pentingnya Cuci Tangan Pakai Sabun untuk Cegah Penyakit",
+    "tanggal": "2025-07-01",
+    "kategori": "Higienitas",
+    "gambar": "",
+    "ringkasan": "Cuci tangan pakai sabun adalah salah satu cara paling efektif mencegah penyebaran penyakit infeksi."
+  },
+  {
+    "id": "002",
+    "slug": "002-mengenal-stunting",
+    "judul": "Mengenal Stunting dan Cara Pencegahannya",
+    "tanggal": "2025-06-20",
+    "kategori": "Gizi",
+    "gambar": "",
+    "ringkasan": "Stunting adalah kondisi gagal tumbuh pada anak akibat kekurangan gizi kronis. Kenali tanda-tandanya sejak dini."
+  }
+]

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Dokter – Puskesmas Kedawung</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .hari-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .hari-tab {
+    padding:8px 16px; border-radius:8px; border:1.5px solid var(--border);
+    font-size:13px; font-weight:600; cursor:pointer; background:white;
+    transition:all 0.15s; color:var(--body);
+  }
+  .hari-tab:hover, .hari-tab.active { background:var(--primary); color:white; border-color:var(--primary); }
+  .hari-today { background:var(--primary-pale); border-color:var(--primary); color:var(--primary); }
+  .hari-tab.hari-today.active { background:var(--primary); color:white; }
+</style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar"></nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> / Jadwal Dokter</div>
+    <h1>Jadwal Dokter</h1>
+    <p>Jadwal praktik dokter dan tenaga medis Puskesmas Kedawung.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Jadwal Praktik</span>
+      <h2 class="section-title">Dokter & Tenaga Medis</h2>
+      <p class="section-sub">Pilih hari untuk melihat jadwal yang tersedia. Jadwal dapat berubah sewaktu-waktu.</p>
+    </div>
+
+    <div class="hari-tabs" id="hari-tabs"></div>
+
+    <div id="jadwal-wrap">
+      <div class="loading-wrap"><div class="spinner"></div> Memuat jadwal...</div>
+    </div>
+
+    <div class="card mt-32" style="border-left:4px solid var(--accent);max-width:600px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:24px;">ℹ️</span>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;">Catatan Penting</div>
+          <div style="font-size:14px;color:var(--muted);line-height:1.7;">Jadwal di atas dapat berubah karena kegiatan dinas, rapat, atau kondisi lainnya. Untuk konfirmasi, silakan hubungi kami terlebih dahulu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const HARI = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+
+function getHariIni() {
+  const day = new Date().getDay(); // 0=Sun,1=Mon,...,6=Sat
+  const map = {1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu'};
+  return map[day] || 'Senin';
+}
+
+let jadwalData = [];
+let selectedHari = getHariIni();
+
+function renderHariTabs() {
+  const hariIni = getHariIni();
+  document.getElementById('hari-tabs').innerHTML = HARI.map(h => `
+    <button class="hari-tab ${h === hariIni ? 'hari-today' : ''} ${h === selectedHari ? 'active' : ''}"
+      onclick="selectHari('${h}')">${h}${h === hariIni ? ' ★' : ''}</button>`).join('');
+}
+
+function selectHari(hari) {
+  selectedHari = hari;
+  renderHariTabs();
+  renderJadwal();
+}
+
+function renderJadwal() {
+  const ada = jadwalData.filter(d => d.jadwal[selectedHari] !== '–' && d.jadwal[selectedHari]);
+  const wrap = document.getElementById('jadwal-wrap');
+  if (!ada.length) {
+    wrap.innerHTML = `<div class="card" style="text-align:center;padding:40px;">
+      <div style="font-size:40px;margin-bottom:12px;">😴</div>
+      <div style="font-weight:700;">Tidak ada jadwal hari ${selectedHari}</div>
+      <div style="color:var(--muted);font-size:14px;margin-top:8px;">Semua dokter libur atau dinas di hari ini.</div>
+    </div>`;
+    return;
+  }
+  wrap.innerHTML = `
+    <div style="overflow-x:auto;">
+    <table class="jadwal-table">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Spesialisasi</th>
+          <th>Jam Praktik (${selectedHari})</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${ada.map(d => `
+          <tr>
+            <td><div class="jadwal-name">${d.nama}</div></td>
+            <td><div class="jadwal-spesialis">${d.spesialis}</div></td>
+            <td><span class="jadwal-on">🟢 ${d.jadwal[selectedHari]}</span></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>`;
+}
+
+initPage(async (profil) => {
+  document.title = `Jadwal Dokter – ${profil.nama}`;
+  jadwalData = await fetchJSON('_data/jadwal.json');
+  renderHariTabs();
+  renderJadwal();
+});
+</script>
+</body>
+</html>
